@@ -9,19 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var event_service_1 = require('./event.service');
-var AppComponent = (function () {
-    function AppComponent() {
+var http_1 = require('@angular/http');
+require('rxjs/add/operator/map');
+var EventService = (function () {
+    function EventService(http) {
+        this.http = http;
+        this.eventsUrl = 'api/events'; // URL to web api
+        this.events = http.get(this.eventsUrl)
+            .map(function (response) { return response.json(); });
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'app',
-            providers: [event_service_1.EventService],
-            template: "<app-layout></app-layout>"
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    EventService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], EventService);
+    return EventService;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.EventService = EventService;
+//# sourceMappingURL=event.service.js.map
